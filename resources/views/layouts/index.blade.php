@@ -21,6 +21,20 @@
 
     @yield('extra-css')
 
+    <style type="text/css">
+        
+        #javascript_loader {
+            z-index:9999; 
+            position:fixed; 
+            height:100%; 
+            width:100%;
+            margin:auto; top:0; 
+            left:0;
+            background:rgba(183, 183, 183,.4) url("images/loading.gif") 50% 50% no-repeat;
+        }
+
+    </style>
+
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -30,7 +44,7 @@
 
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title">
+                        <a href="{{ url('/') }}" class="site_title">
                             <i class="fa fa-header"></i> 
                             <span>
                                 {{ config('app.name', 'Heozeo') }}
@@ -147,12 +161,16 @@
 
     <script type="text/javascript">
         function addLoader() {
-            $('body').append('<div id="javascript_loader" class="" style="z-index:9999; position:fixed; height:100%; width:100%;margin:auto; top:0; left:0;background:rgba(183, 183, 183,.4) url(`{{ asset("asset/images/loading.gif") }}`) 50% 50% no-repeat;"></div>');
+            $('body').append($('#loader-part').html());
         }
 
         function removeLoader() {
             $('#javascript_loader').remove();
         }
+    </script>
+
+    <script type="text/html" id="loader-part">
+        <div id="javascript_loader"></div>
     </script>
 
     @yield('extra-js')

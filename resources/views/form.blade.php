@@ -125,9 +125,12 @@
 					error: function(xhr, status, error) {
 					  var err = JSON.parse(xhr.responseText);
 					  removeLoader();
-					  alert(err.detail);
+					  console.log(err.detail);
+					  alert("No detail found");
 					},
 				});
+			}else{
+				alert("Please enter the people index");
 			}
 		});
 
@@ -180,7 +183,6 @@
 					url : '{{ $film_url }}' + search_value,
 					success : function(responce){
 
-						console.log(responce);
 						$('#film-index').val(search_value);
 						$('#film-name').val(responce.title);
 						$('#director').val(responce.director);
@@ -193,9 +195,12 @@
 					error: function(xhr, status, error) {
 					  var err = JSON.parse(xhr.responseText);
 					  removeLoader();
-					  alert(err.detail);
+					  console.log(err.detail);
+					  alert("No detail found");
 					},
 				});
+			}else{
+				alert("Please enter the film index");
 			}
 		});
 
