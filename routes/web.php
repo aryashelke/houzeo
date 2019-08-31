@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/add', 'HeuzeoController@index')->name('add');
 Route::get('/home', 'HeuzeoController@listView')->name('home');
+Route::get('/film/{film_id}', 'HeuzeoController@getWorkedPeople');
+Route::get('/people/{people_id}', 'HeuzeoController@getWorkedFilm');
 Route::post('/add-film', 'HeuzeoController@saveFilm')->name('add-film');
 Route::post('/add-people', 'HeuzeoController@savePeople')->name('add-people');
 Route::post('/list-film', 'HeuzeoController@getFilmList')->name('list-film');

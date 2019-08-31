@@ -18,6 +18,19 @@
 			display: none;
 		}
 
+		.modal-header .close {
+		    margin-top: -27px;
+		}
+
+		.modal-body ul {
+			list-style: none;
+		}
+
+		.modal-body ul li {
+			margin-left: -7%;
+			margin-bottom: 2%;
+		}
+
 	</style>
 
 @endsection
@@ -38,8 +51,54 @@
     <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/datatables/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ asset('js/validate.js') }}"></script>
+
+    @include('list.list-js')
 	
 	<script type="text/javascript">
+
+		$('#add-people-form').validate({
+			errorElement : 'span',
+			errorClass : 'has-error',
+			rules : {
+				first_name : {
+					required : true,
+				},
+				height : {
+					required : true,
+				},
+			},
+			messages : {
+				first_name : {
+					required : "Please enter the name",
+				},
+				height : {
+					required : "Please enter the height",
+				},
+			},
+		});
+
+
+		$('#add-film-form').validate({
+			errorElement : 'span',
+			errorClass : 'has-error',
+			rules : {
+				film_name : {
+					required : true,
+				},
+				director : {
+					required : true,
+				},
+			},
+			messages : {
+				film_name : {
+					required : "Please enter the name",
+				},
+				director : {
+					required : "Please enter the director",
+				},
+			},
+		});
 		
 		$('.js-search-people').click(function(){
 
@@ -47,10 +106,11 @@
 
 			if (search_value != "") {
 
+				addLoader();
+
 				$.ajax({
 					url : '{{ $people_url }}' + search_value,
 					success : function(responce){
-						console.log(responce);
 
 						$('#people-index').val(search_value);
           				$('#height').val(responce.height);
@@ -59,12 +119,25 @@
 						$('#film-url').val(responce.films.join(','));
 
           				$('#add-people-form').removeClass('hide-people');
-					}
+
+          				removeLoader();
+					},
+					error: function(xhr, status, error) {
+					  var err = JSON.parse(xhr.responseText);
+					  removeLoader();
+					  alert(err.detail);
+					},
 				});
 			}
 		});
 
 		$(document).on('click', '.js-submit-people', function(){
+
+			if (! $('#add-people-form').valid()) {
+				return false;
+			}
+
+			addLoader();
 
 			$.ajax({
 				url: "{{ route('add-people') }}",
@@ -80,6 +153,9 @@
 				},
 				success: function(data){
 					$('.js-cancel-people').click();
+
+					removeLoader();
+
 					people_table.ajax.reload();
 					alert(data.message);
 				}
@@ -98,6 +174,8 @@
 
 			if (search_value != "") {
 
+				addLoader();
+
 				$.ajax({
 					url : '{{ $film_url }}' + search_value,
 					success : function(responce){
@@ -109,13 +187,26 @@
 						$('#characters-url').val(responce.characters.join(','));
 
           				$('#add-film-form').removeClass('hide-film');
-					}
+
+          				removeLoader();
+					},
+					error: function(xhr, status, error) {
+					  var err = JSON.parse(xhr.responseText);
+					  removeLoader();
+					  alert(err.detail);
+					},
 				});
 			}
 		});
 
 
 		$(document).on('click', '.js-submit-film', function(){
+
+			if (! $('#add-film-form').valid()) {
+				return false;
+			}
+
+			addLoader();
 
 			$.ajax({
 				url: "{{ route('add-film') }}",
@@ -131,6 +222,9 @@
 				},
 				success: function(responce){
 					$('.js-cancel-film').click();
+
+					removeLoader();
+					
 					film_table.ajax.reload();
 					alert(responce.message);
 				}
@@ -188,5 +282,7 @@
 	@include('forms.people-form')
 
 	@include('forms.film-form')
+
+	@include('list.view')
 
 @endsection

@@ -188,9 +188,11 @@ class HeuzeoController extends Controller
             foreach ($people_list as $people) {
 
                 $index = $index + 1;
+                $people_id = $people->id;
                 $people_name = $people->name;
+                $row_of_action = view('list.film-row', compact('people_id'))->render();
                 $people_height = implode(' ', [ $people->height, $people->unit_of_height ]);
-                $final_list_array[] = [ $index , $people_name, $people_height ];
+                $final_list_array[] = [ $index , $people_name, $people_height, $row_of_action ];
             }
         }
 
@@ -225,9 +227,11 @@ class HeuzeoController extends Controller
             foreach ($film_list as $film) {
 
                 $index = $index + 1;
+                $film_id = $film->id;
                 $film_name = $film->name;
                 $film_director = $film->director;
-                $final_list_array[] = [ $index , $film_name, $film_director ];
+                $row_of_action = view('list.people-row', compact('film_id'))->render();
+                $final_list_array[] = [ $index , $film_name, $film_director, $row_of_action ];
             }
         }
 
@@ -239,5 +243,49 @@ class HeuzeoController extends Controller
         ];
 
         echo json_encode($list_array);
+    }
+
+    public function getWorkedFilm($people_id){
+
+        $film_list = Film::active()->whereIn('id', function($query)use($people_id){
+            $query->select('film_id')->from(with(new PeopleFilmMapping)->getTable())->where('people_id', $people_id);
+        })->get();
+
+        $view = null;
+
+        if (null !== $film_list && $film_list->isNotEmpty()) {
+
+            $index = 0;
+            foreach ($film_list as $film) {
+                $index = $index + 1;
+                $view .= "<li>" . $index . ". " .$film->name . "</li>";
+            }
+        }else{
+            $view .= "<li> No Record found </li>";   
+        }
+
+        return $view;
+    }
+
+    public function getWorkedPeople($film_id){
+
+        $people_list = People::active()->whereIn('id', function($query)use($film_id){
+            $query->select('people_id')->from(with(new PeopleFilmMapping)->getTable())->where('film_id', $film_id);
+        })->get();
+
+        $view = null;
+
+        if (null !== $people_list && $people_list->isNotEmpty()) {
+
+            $index = 0;
+            foreach ($people_list as $people) {
+                $index = $index + 1;
+                $view .= "<li>" . $index . ". " . $people->name . "</li>";
+            }
+        }else{
+            $view .= "<li> No Record found </li>";   
+        }
+
+        return $view;
     }
 }

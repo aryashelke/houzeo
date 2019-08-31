@@ -43,7 +43,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="hidden" name="index" id="film-index" value="">
 							<input type="hidden" name="characters" value="" id="characters-url">
-							<input type="text" id="film-name" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="text" id="film-name" name="film_name" required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 
 					</div>
@@ -55,7 +55,7 @@
 						</label>
 
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" id="director" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="text" name="director" id="director" required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 
 					</div>

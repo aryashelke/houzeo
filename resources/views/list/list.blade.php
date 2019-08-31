@@ -18,6 +18,19 @@
 			display: none;
 		}
 
+		.modal-header .close {
+		    margin-top: -27px;
+		}
+
+		.modal-body ul {
+			list-style: none;
+		}
+
+		.modal-body ul li {
+			margin-left: -7%;
+			margin-bottom: 2%;
+		}
+
 	</style>
 
 @endsection
@@ -38,6 +51,48 @@
     <script src="{{ asset('js/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/datatables/responsive.bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/datatables/dataTables.scroller.min.js') }}"></script>
+
+    <script type="text/javascript">
+    	
+    	$(document).on('click', '.js-film-list', function(){
+
+			var film_id = $(this).data('film-id');
+
+			if (film_id != "") {
+
+				addLoader();
+
+				$.ajax({
+					url : '{{ url("film/") }}/' + film_id,
+					success : function(responce){
+						$('.people ul').html(responce);
+          				removeLoader();
+          				$('#people-model').modal().show();
+					}
+				});
+			}
+		});
+
+		$(document).on('click', '.js-people-list', function(){
+
+			var people_id = $(this).data('people-id');
+
+			if (people_id != "") {
+
+				addLoader();
+
+				$.ajax({
+					url : '{{ url("people/") }}/' + people_id,
+					success : function(responce){
+						$('.film ul').html(responce);
+          				removeLoader();
+          				$('#film-model').modal().show();
+					}
+				});
+			}
+		});
+
+    </script>
 	
 	<script type="text/javascript">
 		
@@ -126,5 +181,7 @@
 		</div>
 
 	</div>
+
+	@include('list.view')
 
 @endsection

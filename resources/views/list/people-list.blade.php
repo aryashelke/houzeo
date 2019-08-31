@@ -5,11 +5,14 @@
             <th width="10%" align="center" class="no-sort">
                 Sr. No.
             </th>
-            <th width="70%" align="center" class="no-sort">
+            <th width="60%" align="center" class="no-sort">
                 Name
             </th>
             <th width="20%" align="center">
                 Height
+            </th>
+            <th width="10%" align="center">
+                Action
             </th>
         </tr>
     </thead>

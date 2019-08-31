@@ -42,7 +42,7 @@
 
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="hidden" name="film" value="" id="film-url">
-							<input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="text" id="first-name" name="first_name" required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 
 					</div>
@@ -54,7 +54,7 @@
 						</label>
 
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="number" id="height" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="number" id="height" name="height" required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 
 					</div>
