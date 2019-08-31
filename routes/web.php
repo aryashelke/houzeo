@@ -17,4 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/add', 'HeuzeoController@index')->name('add');
+Route::get('/home', 'HeuzeoController@listView')->name('home');
+Route::post('/add-film', 'HeuzeoController@saveFilm')->name('add-film');
+Route::post('/add-people', 'HeuzeoController@savePeople')->name('add-people');
+Route::post('/list-film', 'HeuzeoController@getFilmList')->name('list-film');
+Route::post('/list-people', 'HeuzeoController@getPeopleList')->name('list-people');

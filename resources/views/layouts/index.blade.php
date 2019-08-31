@@ -17,7 +17,7 @@
     <!-- Font Awesome -->
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app-new.css') }}" rel="stylesheet">
 
     @yield('extra-css')
 
@@ -143,7 +143,7 @@
     <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app-new.js') }}" defer></script>
 
     @yield('extra-js')
 
